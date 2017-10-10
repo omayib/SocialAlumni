@@ -2,11 +2,15 @@ package id.technomotion;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.qiscus.sdk.Qiscus;
+import com.sendbird.android.OpenChannel;
+import com.sendbird.android.SendBird;
+import com.sendbird.android.SendBirdException;
+import com.sendbird.android.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.UUID;
@@ -40,19 +44,17 @@ public class AlumnusHolder extends RecyclerView.ViewHolder implements View.OnCli
 
     @Override
     public void onClick(final View v) {
-        v.getContext().startActivity(new Intent(v.getContext(),OtherActivity.class));
-//        Qiscus.buildChatWith("andri@gmail.com")
-//                .withSubtitle("Consultation")
-//                .build(v.getContext(), new Qiscus.ChatActivityBuilderListener() {
-//                    @Override
-//                    public void onSuccess(Intent intent) {
-//                        v.getContext().startActivity(intent);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable throwable) {
-//
-//                    }
-//                });
+//        v.getContext().startActivity(new Intent(v.getContext(),OtherActivity.class));
+        OpenChannel.createChannel(new OpenChannel.OpenChannelCreateHandler() {
+            @Override
+            public void onResult(OpenChannel openChannel, SendBirdException e) {
+                if (e != null) {
+                    e.printStackTrace();
+                    return;
+                }
+                Log.d(TAG, "onResult: "+openChannel.getName());
+                Log.d(TAG, "onResult: "+openChannel.getUrl());
+            }
+        });
     }
 }

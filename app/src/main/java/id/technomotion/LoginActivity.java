@@ -31,9 +31,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.qiscus.sdk.Qiscus;
-import com.qiscus.sdk.data.model.QiscusAccount;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -192,20 +189,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
 //            mAuthTask = new UserLoginTask(email, password);
 //            mAuthTask.execute((Void) null);
-            Qiscus.setUser("omayib@gmail.com","cca3e8c83e6d8cc7701ae5448ab0e181")
-                    .save(new Qiscus.SetUserListener() {
-                        @Override
-                        public void onSuccess(QiscusAccount qiscusAccount) {
-                            Log.d(TAG, "onSuccess: ");
-                            showProgress(false);
-                            startActivity(new Intent(LoginActivity.this, AlumnusListActivity.class));
-                        }
 
-                        @Override
-                        public void onError(Throwable throwable) {
-                            Log.e(TAG, "onError: ",throwable );
-                        }
-                    });
 
         }
     }
