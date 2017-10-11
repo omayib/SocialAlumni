@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<AlumnusHolder> {
-    private ArrayList<Person> mPhotos;
+    private ArrayList<Person> alumnus;
 
     public RecyclerAdapter(ArrayList<Person> mPhotos) {
-        this.mPhotos = mPhotos;
+        this.alumnus = mPhotos;
     }
 
     @Override
@@ -22,12 +22,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<AlumnusHolder> {
 
     @Override
     public void onBindViewHolder(AlumnusHolder holder, int position) {
-        Person person = mPhotos.get(position);
+        Person person = alumnus.get(position);
         holder.bindAlumni(person);
     }
 
     @Override
     public int getItemCount() {
-        return this.mPhotos.size();
+        return this.alumnus.size();
     }
 }
