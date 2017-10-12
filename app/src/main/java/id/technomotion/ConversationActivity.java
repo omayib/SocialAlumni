@@ -10,6 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.sendbird.android.BaseChannel;
+import com.sendbird.android.BaseMessage;
+import com.sendbird.android.SendBird;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -36,9 +40,6 @@ public class ConversationActivity extends AppCompatActivity {
         adapter = new ConversationRecyclerAdapter(conversation);
         recyclerView.setAdapter(adapter);
 
-        for (int i = 0; i < 50; i++) {
-            conversation.add(new Chat(UUID.randomUUID().toString(),"user","avatar"));
-        }
         adapter.notifyDataSetChanged();
         recyclerView.scrollToPosition(conversation.size()-1);
 
@@ -51,6 +52,13 @@ public class ConversationActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 inputMessage.setText("");
                 recyclerView.scrollToPosition(conversation.size()-1);
+            }
+        });
+
+        SendBird.addChannelHandler("idenf", new SendBird.ChannelHandler() {
+            @Override
+            public void onMessageReceived(BaseChannel baseChannel, BaseMessage baseMessage) {
+                Log.d(TAG, "onMessageReceived() called with: baseChannel = [" + baseChannel + "], baseMessage = [" + baseMessage + "]");
             }
         });
     }

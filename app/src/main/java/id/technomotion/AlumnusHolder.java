@@ -7,12 +7,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sendbird.android.GroupChannel;
 import com.sendbird.android.OpenChannel;
 import com.sendbird.android.SendBird;
 import com.sendbird.android.SendBirdException;
 import com.sendbird.android.User;
 import com.squareup.picasso.Picasso;
 
+import java.security.acl.Group;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -45,15 +49,19 @@ public class AlumnusHolder extends RecyclerView.ViewHolder implements View.OnCli
     @Override
     public void onClick(final View v) {
 //        v.getContext().startActivity(new Intent(v.getContext(),OtherActivity.class));
-        OpenChannel.createChannel(new OpenChannel.OpenChannelCreateHandler() {
+        List<String> users = new ArrayList<>();
+        users.add("lela");
+        GroupChannel.createChannelWithUserIds(users, true, new GroupChannel.GroupChannelCreateHandler() {
             @Override
-            public void onResult(OpenChannel openChannel, SendBirdException e) {
-                if (e != null) {
+            public void onResult(GroupChannel groupChannel, SendBirdException e) {
+                if (e != null){
                     e.printStackTrace();
                     return;
                 }
-                Log.d(TAG, "onResult: "+openChannel.getName());
-                Log.d(TAG, "onResult: "+openChannel.getUrl());
+
+                Log.d(TAG, "onResult() called with: groupChannel = [" + groupChannel + "]");
+                Intent intent = new Intent(v.getContext(),ConversationActivity.class);
+                v.getContext().startActivity(intent);
             }
         });
     }
